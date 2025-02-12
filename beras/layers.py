@@ -18,14 +18,15 @@ class Dense(Diffable):
         """
         Forward pass for a dense layer! Refer to lecture slides for how this is computed.
         """
-        self.output = (x @ self.w) + self.b
-        return self.output
+        return (x @ self.w) + self.b
 
     def get_input_gradients(self) -> list[Tensor]:
-        return [self.output @ np.transpose(self.w)]
+        # grad_output = np.transpose(self.w)
+        return [np.transpose(self.w)]
 
     def get_weight_gradients(self) -> list[Tensor]:
         return NotImplementedError
+    
 
     @staticmethod
     def _initialize_weight(initializer, input_size, output_size) -> tuple[Variable, Variable]:
