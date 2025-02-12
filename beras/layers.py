@@ -12,7 +12,7 @@ class Dense(Diffable):
 
     @property
     def weights(self) -> list[Tensor]:
-        return self.w, self.b
+        return [self.w, self.b]
 
     def forward(self, x: Tensor) -> Tensor:
         """
@@ -20,8 +20,8 @@ class Dense(Diffable):
         """
         return (x @ self.w) + self.b
 
-    def get_input_gradients(self) -> list[Tensor]:
-        return NotImplementedError
+    def get_input_gradients(self, output: Tensor) -> list[Tensor]:
+        return [output @ np.transpose(self.w)]
 
     def get_weight_gradients(self) -> list[Tensor]:
         return NotImplementedError
@@ -52,5 +52,9 @@ class Dense(Diffable):
             "xavier",
             "kaiming",
         ), f"Unknown dense weight initialization strategy '{initializer}' requested"
+
+        #set weights and biases based on the type of distribution
+        # if initializer == "zero":
+
 
         return None, None
