@@ -21,7 +21,7 @@ class LeakyReLU(Activation):
 
     def forward(self, x) -> Tensor:
         """Leaky ReLu forward propagation!"""
-        return NotImplementedError
+        return np.maximum(0.01*x,x)
 
     def get_input_gradients(self) -> list[Tensor]:
         """
