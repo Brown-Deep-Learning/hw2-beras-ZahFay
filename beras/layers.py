@@ -21,8 +21,9 @@ class Dense(Diffable):
         return (x @ self.w) + self.b
 
     def get_input_gradients(self) -> list[Tensor]:
-        # grad_output = np.transpose(self.w)
-        return [np.transpose(self.w)]
+        grad_output = self.w.T
+        tensor_grad = Tensor(grad_output)
+        return [tensor_grad]
 
     def get_weight_gradients(self) -> list[Tensor]:
         return NotImplementedError
