@@ -22,7 +22,7 @@ class Dense(Diffable):
 
     def get_input_gradients(self) -> list[Tensor]:
         grad_output = self.w.T
-        tensor_grad = Tensor(grad_output)
+        tensor_grad = Tensor(self.w)
         return [tensor_grad]
 
     def get_weight_gradients(self) -> list[Tensor]:
