@@ -28,7 +28,7 @@ class Dense(Diffable):
 
     def get_weight_gradients(self) -> list[Tensor]:
         array_1 = np.ones((1,self.b.shape[0]))
-        return [Tensor(self.x.T)],[Tensor(array_1)]
+        return [Tensor(self.x),Tensor(array_1)]
     
 
     @staticmethod
