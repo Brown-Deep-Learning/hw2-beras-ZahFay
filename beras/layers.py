@@ -9,6 +9,7 @@ class Dense(Diffable):
 
     def __init__(self, input_size, output_size, initializer: DENSE_INITIALIZERS = "normal"):
         self.w, self.b = self._initialize_weight(initializer, input_size, output_size)
+        self.x
 
     @property
     def weights(self) -> list[Tensor]:
@@ -18,15 +19,15 @@ class Dense(Diffable):
         """
         Forward pass for a dense layer! Refer to lecture slides for how this is computed.
         """
+        self.x = 0
         return (x @ self.w) + self.b
 
     def get_input_gradients(self) -> list[Tensor]:
-        grad_output = self.w.T
         tensor_grad = Tensor(self.w)
         return [tensor_grad]
 
     def get_weight_gradients(self) -> list[Tensor]:
-        return NotImplementedError
+        return [Tensor(self.x),Tensor(np.ones(1,self.b.shape[0]))]
     
 
     @staticmethod
