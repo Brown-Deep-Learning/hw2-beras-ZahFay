@@ -9,6 +9,7 @@ class Dense(Diffable):
 
     def __init__(self, input_size, output_size, initializer: DENSE_INITIALIZERS = "normal"):
         self.w, self.b = self._initialize_weight(initializer, input_size, output_size)
+        self.output_size = output_size
         self.x = None
 
     @property
@@ -27,7 +28,7 @@ class Dense(Diffable):
         return [tensor_grad]
 
     def get_weight_gradients(self) -> list[Tensor]:
-        array_1 = np.ones((1,self.b.shape[0]))
+        array_1 = np.ones((self.x.shape[0], self.b.shape[0]))
         return [Tensor(self.x),Tensor(array_1)]
     
 
