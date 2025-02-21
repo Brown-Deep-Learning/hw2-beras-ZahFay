@@ -27,7 +27,7 @@ class Dense(Diffable):
         return [tensor_grad]
 
     def get_weight_gradients(self) -> list[Tensor]:
-        return [Tensor(self.x),Tensor(np.ones(1,self.b.shape[0]))]
+        return [Tensor(self.x),Tensor(np.ones((1,self.b.shape[0])))]
     
 
     @staticmethod
