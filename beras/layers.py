@@ -31,7 +31,7 @@ class Dense(Diffable):
         array_1 = np.ones((self.x.shape[0], self.b.shape[0]))
         print(self.x.shape)
         print(self.b.shape)
-        return [Tensor(self.x),Tensor(np.ones((self.b.shape)))]
+        return [Tensor(self.x),Tensor(np.ones(self.b.shape[1]))]
     
 
     @staticmethod
