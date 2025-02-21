@@ -32,7 +32,7 @@ class Dense(Diffable):
         # print(self.x.shape)
         # print(self.b.shape)
         # print(np.ones((10, 10, 5)))
-        return [Tensor(self.x),Tensor(array_1), Tensor(self.w)]
+        return [Tensor(self.inputs),Tensor(np.ones(self.b.shape))]
     
 
     @staticmethod
