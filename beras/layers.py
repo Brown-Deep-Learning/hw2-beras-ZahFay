@@ -32,7 +32,7 @@ class Dense(Diffable):
         print(self.x.shape)
         print(self.b.shape)
         print("This is inputs ", np.array(self.inputs).shape)
-        return [Tensor(np.array(self.inputs)),Tensor(np.ones(self.b.shape))]
+        return [Tensor(np.array(self.x @ self.inputs)),Tensor(np.ones(self.b.shape))]
     
 
     @staticmethod
