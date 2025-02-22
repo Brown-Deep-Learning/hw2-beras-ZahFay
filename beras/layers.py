@@ -33,7 +33,7 @@ class Dense(Diffable):
         # print(self.x.shape)
         # print(self.b.shape)
         # print("This is inputs ", np.array(self.inputs).shape)
-        return [Tensor(self.x),Tensor(np.ones(self.b.shape))]
+        return [Tensor(self.inputs),Tensor(np.ones(self.b.shape))]
     
     @staticmethod
     def generateDistribution(input_size,output_size,type):
@@ -45,7 +45,7 @@ class Dense(Diffable):
                 elif type == 2: #xavier-GlorotNormal
                     stand_dev = np.sqrt(2.0/ (input_size + output_size))
                     weights[i,j] = random.gauss(0.0,stand_dev)
-                elif type == 3:
+                elif type == 3: #kaiming-HeNormal
                     stand_dev = np.sqrt(2.0/ input_size)
                     weights[i,j] = random.gauss(0.0,stand_dev)
         return weights
