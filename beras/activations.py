@@ -33,7 +33,8 @@ class LeakyReLU(Activation):
         To see what methods/variables you have access to, refer to the cheat sheet.
         Hint: Make sure not to mutate any instance variables. Return a new list[tensor(s)]
         """
-        return Tensor(np.where(np.array(self.inputs) > 0, 1, self.alpha))
+        #Wherever the input is greater than 0, switch it 1, otherwise switch it to alpha
+        return [Tensor(np.where(np.array(self.inputs) > 0, 1, self.alpha))]
 
     def compose_input_gradients(self, J):
         return self.get_input_gradients()[0] * J
@@ -51,6 +52,7 @@ class Sigmoid(Activation):
     
     def forward(self, x) -> Tensor:
         npx = np.array(x)
+        #np.exp(x) = e^x
         return Tensor(1/(1 + np.exp(-npx)))
 
     def get_input_gradients(self) -> list[Tensor]:
@@ -58,7 +60,9 @@ class Sigmoid(Activation):
         To see what methods/variables you have access to, refer to the cheat sheet.
         Hint: Make sure not to mutate any instance variables. Return a new list[tensor(s)]
         """
-        raise 
+        npx = np.array(self.inputs)
+        sig_x = 1/(1 + np.exp(-npx))
+        return [Tensor(np.array(sig_x*(1-sig_x)))]
 
     def compose_input_gradients(self, J):
         return self.get_input_gradients()[0] * J
