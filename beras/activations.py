@@ -34,7 +34,7 @@ class LeakyReLU(Activation):
         Hint: Make sure not to mutate any instance variables. Return a new list[tensor(s)]
         """
         #also try self.x
-        raise Tensor(np.where(self.inputs > 0, 1, self.alpha))
+        return Tensor(np.where(self.inputs > 0, 1, self.alpha))
 
     def compose_input_gradients(self, J):
         return self.get_input_gradients()[0] * J
