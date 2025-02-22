@@ -18,13 +18,14 @@ class LeakyReLU(Activation):
 
     def __init__(self, alpha=0.3):
         self.alpha = alpha
+        self.x = None
 
     def forward(self, x) -> Tensor:
         """Leaky ReLu forward propagation!"""
-        toreturn = 0
-        if x <= 0:
-            toreturn = x*0.01
-        return toreturn
+        self.x = x
+        #Same as the logic of, if x > 0 then return x, otherwise return self.alpha * x
+        #np.where is used due to the fact that we have an np.array to iterate over
+        return np.where(x > 0, x, self.alpha * x)
 
     def get_input_gradients(self) -> list[Tensor]:
         """
