@@ -33,7 +33,6 @@ class LeakyReLU(Activation):
         To see what methods/variables you have access to, refer to the cheat sheet.
         Hint: Make sure not to mutate any instance variables. Return a new list[tensor(s)]
         """
-        #also try self.x
         return Tensor(np.where(np.array(self.inputs) > 0, 1, self.alpha))
 
     def compose_input_gradients(self, J):
@@ -50,17 +49,16 @@ class ReLU(LeakyReLU):
 
 class Sigmoid(Activation):
     
-    ## TODO: Implement for default output activation to bind output to 0-1
-    
     def forward(self, x) -> Tensor:
-        raise NotImplementedError
+        npx = np.array(x)
+        return Tensor(1/(1 + np.exp(-npx)))
 
     def get_input_gradients(self) -> list[Tensor]:
         """
         To see what methods/variables you have access to, refer to the cheat sheet.
         Hint: Make sure not to mutate any instance variables. Return a new list[tensor(s)]
         """
-        raise NotImplementedError
+        raise 
 
     def compose_input_gradients(self, J):
         return self.get_input_gradients()[0] * J
@@ -76,10 +74,11 @@ class Softmax(Activation):
         ## Not stable version
         ## exps = np.exp(inputs)
         ## outs = exps / np.sum(exps, axis=-1, keepdims=True)
-
+        npx = np.array(x)
         ## HINT: Use stable softmax, which subtracts maximum from
         ## all entries to prevent overflow/underflow issues
-        raise NotImplementedError
+        max_entry = np.exp(npx - np.max(npx,axis = -1, keepdims = True))
+        return max_entry/np.sum(max_entry, axis = -1, keepdims = True)
 
     def get_input_gradients(self):
         """Softmax input gradients!"""
