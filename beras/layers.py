@@ -86,13 +86,13 @@ class Dense(Diffable):
             bias_tensor = Variable(Tensor(np.zeros((input_size,output_size))))
         elif initializer == "normal":
             weight_tensor = Variable(Tensor(Dense.generateDistribution(input_size, output_size, 1)))
-            bias_tensor = Variable(Tensor(np.ones((input_size,output_size))))
+            bias_tensor = Variable(Tensor(np.zeros((output_size,))))
         elif initializer == "xavier":
             weight_tensor = Variable(Tensor(Dense.generateDistribution(input_size, output_size, 2)))
-            bias_tensor = Variable(Tensor(np.ones((input_size,output_size))))
+            bias_tensor = Variable(Tensor(np.zeros((output_size,))))
         elif initializer == "kaiming":
             weight_tensor = Variable(Tensor(Dense.generateDistribution(input_size, output_size, 3)))
-            bias_tensor = Variable(Tensor(np.ones((input_size,output_size))))
+            bias_tensor = Variable(Tensor(np.zeros((output_size,))))
 
         return weight_tensor, bias_tensor
 
