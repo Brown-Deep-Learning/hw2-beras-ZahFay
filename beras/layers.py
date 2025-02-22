@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 from typing import Literal
 from beras.core import Diffable, Variable, Tensor
@@ -29,10 +30,25 @@ class Dense(Diffable):
 
     def get_weight_gradients(self) -> list[Tensor]:
         array_1 = np.ones((self.x.shape[0], self.b.shape[0]))
-        print(self.x.shape)
-        print(self.b.shape)
-        print("This is inputs ", np.array(self.inputs).shape)
-        return [Tensor(np.array(self.x.T @ self.inputs)),Tensor(np.ones(self.b.shape))]
+        # print(self.x.shape)
+        # print(self.b.shape)
+        # print("This is inputs ", np.array(self.inputs).shape)
+        return [Tensor(self.x),Tensor(np.ones(self.b.shape))]
+    
+    @staticmethod
+    def generateDistribution(input_size,output_size,type):
+        weights = np.empty((input_size,output_size))
+        for i in range(input_size):
+            for j in range(output_size):
+                if type == 1: #normal
+                    weights[i,j] = random.gauss(0.0,1.0)
+                elif type == 2: #xavier-GlorotNormal
+                    stand_dev = np.sqrt(2.0/ (input_size + output_size))
+                    weights[i,j] = random.gauss(0.0,stand_dev)
+                elif type == 3:
+                    stand_dev = np.sqrt(2.0/ input_size)
+                    weights[i,j] = random.gauss(0.0,stand_dev)
+        return weights
     
 
     @staticmethod
@@ -63,7 +79,22 @@ class Dense(Diffable):
         ), f"Unknown dense weight initialization strategy '{initializer}' requested"
 
         #set weights and biases based on the type of distribution
-        # if initializer == "zero":
+        weight_tensor = None
+        bias_tensor = None
+        if initializer == "zero":
+            weight_tensor = Variable(Tensor(np.zeros((input_size,output_size))))
+            bias_tensor = Variable(Tensor(np.zeros((input_size,output_size))))
+        elif initializer == "normal":
+            weight_tensor = Variable(Tensor(Dense.generateDistribution(input_size, output_size, 1)))
+            bias_tensor = Variable(Tensor(np.ones((input_size,output_size))))
+        elif initializer == "xavier":
+            weight_tensor = Variable(Tensor(Dense.generateDistribution(input_size, output_size, 2)))
+            bias_tensor = Variable(Tensor(np.ones((input_size,output_size))))
+        elif initializer == "kaiming":
+            weight_tensor = Variable(Tensor(Dense.generateDistribution(input_size, output_size, 3)))
+            bias_tensor = Variable(Tensor(np.ones((input_size,output_size))))
+
+        return weight_tensor, bias_tensor
 
 
-        return None, None
+

@@ -26,6 +26,9 @@ class Tensor(np.ndarray):
             return
         self.trainable = getattr(obj, "trainable", True)
 
+    def assign(self, value: Union[Tensor, np.ndarray]):
+        self[:] = value
+
 
 """
 Mimics the tf.Variable class.
