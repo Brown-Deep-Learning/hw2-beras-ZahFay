@@ -23,9 +23,30 @@ class OneHotEncoder(Callable):
         :param data: 1D array containing labels.
             For example, data = [0, 1, 3, 3, 1, 9, ...]
         """
+        np_data = np.array(data)
+        labels = np.unique(np_data)
+        #dictionary for label - onehot vector pair
+        match_lv = {}
+
+        for i in range(len(labels)):
+            vector = np.zeros(len(labels))
+            vector[i] = 1
+            match_lv[labels[i]] = vector
+
         return NotImplementedError
 
     def forward(self, data):
+        np_data = np.array(data)
+        #first get the number of possible labels
+        labels = np.unique(np_data)
+
+        vector_options = np.zeros(len(np_data),len(labels))
+        for i in range(labels):
+            vector_options[i] = 
+
+
+
+        
         return NotImplementedError
 
     def inverse(self, data):
