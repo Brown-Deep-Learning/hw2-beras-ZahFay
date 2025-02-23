@@ -16,7 +16,7 @@ class Loss(Diffable):
 
 class MeanSquaredError(Loss):
     def forward(self, y_pred: Tensor, y_true: Tensor) -> Tensor:
-        return NotImplementedError
+        return np.mean(np.mean((y_true - y_pred)**2, axis = 1))
 
     def get_input_gradients(self) -> list[Tensor]:
         return NotImplementedError

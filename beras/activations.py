@@ -14,8 +14,6 @@ class Activation(Diffable):
 
 class LeakyReLU(Activation):
 
-    ## TODO: Implement for default intermediate activation.
-
     def __init__(self, alpha=0.3):
         self.alpha = alpha
         self.x = None
