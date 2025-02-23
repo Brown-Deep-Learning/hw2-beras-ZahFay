@@ -52,6 +52,6 @@ class OneHotEncoder(Callable):
         return vector_options
 
     def inverse(self, data):
-        #data here is the vector_options from above, we find all the unique one-hot vectors
+        #data here is the vector_options from above, then we find all the unique one-hot vectors
         np.unique(data, axis= 0)
         return NotImplementedError
