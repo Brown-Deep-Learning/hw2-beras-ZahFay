@@ -31,7 +31,7 @@ class Dense(Diffable):
     def get_weight_gradients(self) -> list[Tensor]:
         #bias array of ones
         array_1 = np.ones(np.array(self.inputs).shape[0])
-        return [Tensor(array_1),Tensor(self.inputs)]
+        return [Tensor(self.inputs),Tensor(array_1)]
     
     @staticmethod
     def generateDistribution(input_size,output_size,type):
