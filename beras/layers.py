@@ -33,7 +33,7 @@ class Dense(Diffable):
         # print(self.x.shape)
         # print(self.b.shape)
         # print("This is inputs ", np.array(self.inputs).shape)
-        return [Tensor(np.ones(self.b.shape)),Tensor(self.inputs)]
+        return [Tensor(array_1),Tensor(self.inputs.T)]
     
     @staticmethod
     def generateDistribution(input_size,output_size,type):
