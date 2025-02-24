@@ -77,7 +77,7 @@ class Softmax(Activation):
         ## exps = np.exp(inputs)
         ## outs = exps / np.sum(exps, axis=-1, keepdims=True)
         npx = np.array(x)
-        print(npx.size)
+        print(npx.shape)
         ## HINT: Use stable softmax, which subtracts maximum from
         ## all entries to prevent overflow/underflow issues
         max_entry = np.exp(npx - np.max(npx,axis = -1, keepdims = True))
