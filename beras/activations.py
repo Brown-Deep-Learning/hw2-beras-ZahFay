@@ -77,7 +77,6 @@ class Softmax(Activation):
         ## exps = np.exp(inputs)
         ## outs = exps / np.sum(exps, axis=-1, keepdims=True)
         npx = np.array(x)
-        print(npx.shape)
         ## HINT: Use stable softmax, which subtracts maximum from
         ## all entries to prevent overflow/underflow issues
         max_entry = np.exp(npx - np.max(npx,axis = -1, keepdims = True))
@@ -93,7 +92,6 @@ class Softmax(Activation):
         #then fill everything else with -SS which is similar to the outer product of matrix
         for i in range(bn):
             soft_out = y[i]
-            print(np.array(y[i].shape))
             np.fill_diagonal(grad[i], soft_out*(1- soft_out))
             grad[i] = grad[i] - np.outer(soft_out,soft_out)
-        return grad
+        return grad[0]
