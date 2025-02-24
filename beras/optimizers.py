@@ -20,6 +20,7 @@ class RMSProp:
         for parameter, grad in zip(trainable_params, grads):
             #parameter as a tensor is not hashable, so we get its ID to make it the key for our dictionary
             param_ID = id(parameter)
+            print(param_ID)
             #update dictionary
             self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * np.square(grad))
 
