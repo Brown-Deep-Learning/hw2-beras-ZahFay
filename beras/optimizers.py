@@ -17,10 +17,13 @@ class RMSProp:
 
     ##TODO: Figure out how to get rid of discrepency 
     def apply_gradients(self, trainable_params, grads):
-       print(trainable_params)
        
        #update dictionary
-       self.v[trainable_params] = self.beta * self.v[trainable_params]
+       self.v[trainable_params] = self.beta * self.v[trainable_params] + ((1- self.beta) * np.square(grads))
+
+        #update weights
+       denominator = np.sqrt(self.v.values()) + self.epsilon
+       trainable_params.assign(trainable_params - (self.learning_rate/denominator)* grads)
 
 
 class Adam:
