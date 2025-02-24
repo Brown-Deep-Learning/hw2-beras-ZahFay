@@ -91,7 +91,7 @@ class Softmax(Activation):
         #calculate softmax output, fill diagonal of jacobian matrix with i=j case
         #then fill everything else with -SS which is similar to the outer product of matrix
         for i in range(bn):
-            soft_out = y[i].squeeze()
+            soft_out = y[i]
             np.fill_diagonal(grad[i], soft_out*(1- soft_out))
             grad[i] = grad[i] - np.outer(soft_out,soft_out)
-        return grad
+        return np.squeeze(grad, axis = 0)
