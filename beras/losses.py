@@ -24,7 +24,10 @@ class MeanSquaredError(Loss):
 
         rows = y_pred.shape[0]
         columns = y_pred.shape[1]
-        return [(-2/ (rows * columns)) *(y_true - y_pred)]
+
+        grad_y_pred = (-2/ (rows * columns)) *(y_true - y_pred)
+        grad_y_true = (2/ (rows * columns)) *(y_true - y_pred)
+        return [grad_y_pred,grad_y_true]
 
 class CategoricalCrossEntropy(Loss):
 
