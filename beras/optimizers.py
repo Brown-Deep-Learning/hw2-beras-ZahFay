@@ -17,9 +17,16 @@ class RMSProp:
 
     def apply_gradients(self, trainable_params, grads):
         for parameter, grad in zip(trainable_params, grads):
-            self.v[parameter] = self.beta * self.v[parameter] + ((1- self.beta) * (grad ** 2))
-            denom = (self.v[parameter] ** 0.5)+ self.epsilon
+            #parameter as a tensor is not hashable, so we get its ID to make it the key for our dictionary
+            param_ID = id(parameter)
+            #update dictionary
+            self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * (grad ** 2))
+
+            #calculations for trainable params
+            denom = (self.v[param_ID] ** 0.5)+ self.epsilon
             partPara = (self.learning_rate/denom) * grad
+
+            #update the parameter
             parameter.assign(parameter - partPara)
 
 
