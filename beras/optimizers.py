@@ -24,7 +24,7 @@ class RMSProp:
             self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * np.square(grad))
 
             #calculations for trainable params
-            denom = (np.power(self.v[param_ID],0.5))+ self.epsilon
+            denom = (np.sqrt(self.v[param_ID]))+ self.epsilon
             partPara = (self.learning_rate/denom) * grad
 
             #update the parameter
