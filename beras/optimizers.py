@@ -20,10 +20,10 @@ class RMSProp:
             #parameter as a tensor is not hashable, so we get its ID to make it the key for our dictionary
             param_ID = id(parameter)
             #update dictionary
-            self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * (grad ** 2))
+            self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * np.power(grad,2))
 
             #calculations for trainable params
-            denom = (self.v[param_ID] ** 0.5)+ self.epsilon
+            denom = (np.power(self.v[param_ID],0.5))+ self.epsilon
             partPara = (self.learning_rate/denom) * grad
 
             #update the parameter
