@@ -15,12 +15,13 @@ class RMSProp:
         self.epsilon = epsilon
         self.v = defaultdict(lambda: 0)
 
+    ##TODO: Figure out how to get rid of discrepency 
     def apply_gradients(self, trainable_params, grads):
         for parameter, grad in zip(trainable_params, grads):
             #parameter as a tensor is not hashable, so we get its ID to make it the key for our dictionary
             param_ID = id(parameter)
             #update dictionary
-            self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * np.power(grad,2))
+            self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * np.square(grad))
 
             #calculations for trainable params
             denom = (np.power(self.v[param_ID],0.5))+ self.epsilon
