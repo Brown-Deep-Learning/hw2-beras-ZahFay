@@ -86,7 +86,7 @@ class Softmax(Activation):
         """Softmax input gradients!"""
         x, y = self.inputs + self.outputs
         bn, n = x.shape
-        grad = np.zeros(shape=(bn, n, n), dtype=x.dtype)
+        grad = np.zeros(shape=(1,bn, n, n), dtype=x.dtype)
 
         #calculate softmax output, fill diagonal of jacobian matrix with i=j case
         #then fill everything else with -SS which is similar to the outer product of matrix
@@ -94,7 +94,5 @@ class Softmax(Activation):
             soft_out = y[i]
             np.fill_diagonal(grad[i], soft_out*(1- soft_out))
             grad[i] = grad[i] - np.outer(soft_out,soft_out)
-        # print(grad.shape)
-        print(np.array([grad]).shape)
-        # print(Tensor(np.array([grad])))
+        
         return grad
