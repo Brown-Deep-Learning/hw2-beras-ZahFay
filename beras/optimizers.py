@@ -18,8 +18,12 @@ class RMSProp:
     ##TODO: Figure out how to get rid of discrepency 
     def apply_gradients(self, trainable_params, grads):
        
-       #update dictionary
-       self.v[trainable_params] = self.beta * self.v[trainable_params] + ((1- self.beta) * np.square(grads))
+       #populate dictionary with the trainable_params as they key and placeholder v-value 0
+       self.v.update({key: 0 for key in trainable_params})
+
+       #populate the dictionary with the v-value based on the pre-populated keys, could run into an issue with grads
+       for key in self.v.keys():
+           self.v[key] = self.beta * self.v[key] + ((1- self.beta) * np.square(grads))
 
         #update weights
        denominator = np.sqrt(self.v.values()) + self.epsilon
