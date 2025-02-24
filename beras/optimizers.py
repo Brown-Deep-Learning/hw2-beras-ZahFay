@@ -19,10 +19,9 @@ class RMSProp:
     def apply_gradients(self, trainable_params, grads):
        
        #populate dictionary with the trainable_params as they key and placeholder v-value 0
-       print("Error here?")
+       print(type(trainable_params))
        self.v.update({key: 0 for key in trainable_params})
 
-       print("Error hereeeeeee")
        #populate the dictionary with the v-value based on the pre-populated keys, could run into an issue with grads
        for key in self.v.keys():
            self.v[key] = self.beta * self.v[key] + ((1- self.beta) * np.square(grads))
