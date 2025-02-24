@@ -17,21 +17,10 @@ class RMSProp:
 
     ##TODO: Figure out how to get rid of discrepency 
     def apply_gradients(self, trainable_params, grads):
-
-        #create another v which is an array that then multiplies
-        # parameterID = np.empty(trainable_params.shape)
-        # for i,param in enumerate(trainable_params):
-        #     parameterID[i] = id(param)
-        
-        #the running average
-        self.v = self.beta * self.v + ((1- self.beta) * np.square(grads))
-
-        #calculations for trainable params
-        denom = (np.sqrt(self.v))+ self.epsilon
-        partPara = (self.learning_rate/denom) * grads
-
-        #update the parameter
-        trainable_params.assign(trainable_params - partPara)
+       print(trainable_params)
+       
+       #update dictionary
+       self.v[trainable_params] = self.beta * self.v[trainable_params]
 
 
 class Adam:
@@ -51,3 +40,17 @@ class Adam:
 
     def apply_gradients(self, trainable_params, grads):
         return NotImplementedError
+    
+    #  for parameter, grad in zip(trainable_params, grads):
+    #         #parameter as a tensor is not hashable, so we get its ID to make it the key for our dictionary
+    #         param_ID = id(parameter)
+            
+    #         #update dictionary
+    #         self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * np.square(grad))
+
+    #         #calculations for trainable params
+    #         denom = (np.sqrt(self.v[param_ID]))+ self.epsilon
+    #         partPara = (self.learning_rate/denom) * grad
+
+    #         #update the parameter
+    #         parameter.assign(parameter - partPara)
