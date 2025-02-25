@@ -20,13 +20,13 @@ class RMSProp:
             param = trainable_params[i]
             grad = grads[i]
 
-            paramID = id(param)
-            print(paramID)
+            # paramID = id(param)
+            # print(paramID)
             #populate dictionary
-            self.v[paramID] = self.beta * self.v[paramID] + ((1- self.beta) * np.square(grad))
+            self.v[i] = self.beta * self.v[i] + ((1- self.beta) * np.square(grad))
 
             #Calculate new parameters
-            denominator = np.sqrt(self.v[paramID]) + self.epsilon
+            denominator = np.sqrt(self.v[i]) + self.epsilon
             trainable_params[i].assign(param - (self.learning_rate / denominator) * grad) 
             # param.assign(param - (self.learning_rate / denominator) * grad)
 
