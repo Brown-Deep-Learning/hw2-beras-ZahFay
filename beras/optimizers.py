@@ -16,12 +16,17 @@ class RMSProp:
         self.v = defaultdict(lambda: 0)
 
     def apply_gradients(self, trainable_params, grads):
-        for param, grad in zip(trainable_params,grads):
+        for i in range(len(trainable_params)):
+            param = trainable_params[i]
+            grad = grads[i]
+
+            paramID = id(param)
+            print(paramID)
             #populate dictionary
-            self.v[id(param)] = self.beta * self.v[id(param)] + ((1- self.beta) * np.square(grad))
+            self.v[paramID] = self.beta * self.v[paramID] + ((1- self.beta) * np.square(grad))
 
             #Calculate new parameters
-            denominator = np.sqrt(self.v[id(param)]) + self.epsilon
+            denominator = np.sqrt(self.v[paramID]) + self.epsilon
 
             param.assign(param - (self.learning_rate / denominator) * grad)
 
