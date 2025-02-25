@@ -27,7 +27,7 @@ class RMSProp:
 
             #Calculate new parameters
             denominator = np.sqrt(self.v[i]) + self.epsilon
-            trainable_params[i].assign(param - (self.learning_rate / denominator) * grad) 
+            param.assign(param - (self.learning_rate / denominator) * grad) 
             # param.assign(param - (self.learning_rate / denominator) * grad)
 
 
