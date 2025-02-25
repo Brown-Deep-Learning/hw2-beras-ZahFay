@@ -16,7 +16,7 @@ class RMSProp:
         self.v = defaultdict(lambda: 0)
 
     def apply_gradients(self, trainable_params, grads):
-        for param, grad in zip(trainable_params,grad):
+        for param, grad in zip(trainable_params,grads):
             #populate dictionary
             self.v[id(param)] = self.beta * self.v[id(param)] + ((1- self.beta) * np.square(grad))
 
