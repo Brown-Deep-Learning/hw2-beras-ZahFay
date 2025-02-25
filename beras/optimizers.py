@@ -15,19 +15,16 @@ class RMSProp:
         self.epsilon = epsilon
         self.v = defaultdict(lambda: 0)
 
-    ##TODO: Figure out how to get rid of discrepency 
     def apply_gradients(self, trainable_params, grads):
-       
-       #populate dictionary with the trainable_params as they key and placeholder v-value 0
-       self.v.update({key: 0 for key in np.array(trainable_params).flatten()})
+        for param, grad in zip(trainable_params,grad):
+            #populate dictionary
+            self.v[id(param)] = self.beta * self.v[id(param)] + ((1- self.beta) * np.square(grad))
 
-       #populate the dictionary with the v-value based on the pre-populated keys, could run into an issue with grads
-       for key in self.v.keys():
-           self.v[key] = self.beta * self.v[key] + ((1- self.beta) * np.square(grads))
+            #Calculate new parameters
+            denominator = np.sqrt(self.v[id(param)]) + self.epsilon
 
-        #update weights
-       denominator = np.sqrt(self.v.values()) + self.epsilon
-       trainable_params.assign(trainable_params - (self.learning_rate/denominator)* grads)
+            param.assign(param - (self.learning_rate / denominator) * grad)
+
 
 
 class Adam:
@@ -47,17 +44,3 @@ class Adam:
 
     def apply_gradients(self, trainable_params, grads):
         return NotImplementedError
-    
-    #  for parameter, grad in zip(trainable_params, grads):
-    #         #parameter as a tensor is not hashable, so we get its ID to make it the key for our dictionary
-    #         param_ID = id(parameter)
-            
-    #         #update dictionary
-    #         self.v[param_ID] = self.beta * self.v[param_ID] + ((1- self.beta) * np.square(grad))
-
-    #         #calculations for trainable params
-    #         denom = (np.sqrt(self.v[param_ID]))+ self.epsilon
-    #         partPara = (self.learning_rate/denom) * grad
-
-    #         #update the parameter
-    #         parameter.assign(parameter - partPara)
