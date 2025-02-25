@@ -81,7 +81,7 @@ class Softmax(Activation):
         ## all entries to prevent overflow/underflow issues
         max_entry = np.exp(npx - np.max(npx,axis = -1, keepdims = True))
         return max_entry/np.sum(max_entry, axis = -1, keepdims = True)
-
+          
     def get_input_gradients(self):
         """Softmax input gradients!"""
         x, y = self.inputs + self.outputs
@@ -92,6 +92,7 @@ class Softmax(Activation):
         #then fill everything else with -SS which is similar to the outer product of matrix
         for i in range(bn):
             soft_out = y[i]
+            print(soft_out)
             np.fill_diagonal(grad[i], soft_out*(1- soft_out))
             grad[i] = grad[i] - np.outer(soft_out,soft_out)
         
