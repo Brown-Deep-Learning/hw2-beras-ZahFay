@@ -69,8 +69,6 @@ class Sigmoid(Activation):
 class Softmax(Activation):
     # https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/
 
-    ## TODO [2470]: Implement for default output activation to bind output to 0-1
-
     def forward(self, x):
         """Softmax forward propagation!"""
         ## Not stable version
@@ -89,7 +87,7 @@ class Softmax(Activation):
         grad = np.zeros(shape=(bn, n, n), dtype=x.dtype)
 
         #calculate softmax output, fill diagonal of jacobian matrix with i=j case
-        #then fill everything else with -SS which is similar to the outer product of matrix (not efficient but works)
+        #then fill everything else with -SS (not efficient but works)
         for i in range(bn):
             soft_out = y[i]
             np.fill_diagonal(grad[i], soft_out * (1- soft_out))

@@ -33,8 +33,12 @@ class CategoricalCrossEntropy(Loss):
 
     def forward(self, y_pred, y_true):
         """Categorical cross entropy forward pass!"""
-        return NotImplementedError
+        y_clip = np.clip(y_pred, 1e-10,1.0)
+        return - 1 * np.sum(y_true, y_clip)
 
     def get_input_gradients(self):
         """Categorical cross entropy input gradient method!"""
-        return NotImplementedError
+        y_pred = self.inputs[0]
+        y_true = self.inputs[1]
+        
+        return y_pred - y_true
