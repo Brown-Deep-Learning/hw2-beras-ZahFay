@@ -80,12 +80,11 @@ class Softmax(Activation):
         ## HINT: Use stable softmax, which subtracts maximum from
         ## all entries to prevent overflow/underflow issues
         max_entry = np.exp(npx - np.max(npx,axis = -1, keepdims = True))
-        print(max_entry/np.sum(max_entry, axis = -1, keepdims = True))
         return max_entry/np.sum(max_entry, axis = -1, keepdims = True)
           
     def get_input_gradients(self):
         """Softmax input gradients!"""
-        x, y = self.inputs, self.outputs
+        x, y = self.inputs + self.outputs
         bn, n = x.shape
         grad = np.zeros(shape=(bn, n, n), dtype=x.dtype)
 
