@@ -41,4 +41,4 @@ class CategoricalCrossEntropy(Loss):
         y_pred = self.inputs[0]
         y_true = self.inputs[1]
         
-        return y_pred - y_true
+        return np.square(y_pred - y_true)
