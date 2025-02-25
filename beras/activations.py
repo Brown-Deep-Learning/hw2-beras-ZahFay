@@ -80,6 +80,7 @@ class Softmax(Activation):
         ## HINT: Use stable softmax, which subtracts maximum from
         ## all entries to prevent overflow/underflow issues
         max_entry = np.exp(npx - np.max(npx,axis = -1, keepdims = True))
+        print(max_entry/np.sum(max_entry, axis = -1, keepdims = True))
         return max_entry/np.sum(max_entry, axis = -1, keepdims = True)
           
     def get_input_gradients(self):
@@ -95,6 +96,4 @@ class Softmax(Activation):
             np.fill_diagonal(grad[i], soft_out*(1- soft_out))
             grad[i] = grad[i] - np.outer(soft_out,soft_out)
 
-        print(grad)
-        print(grad.shape)
         return Tensor(np.array([grad]))
