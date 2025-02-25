@@ -85,7 +85,7 @@ class Softmax(Activation):
           
     def get_input_gradients(self):
         """Softmax input gradients!"""
-        x, y = self.inputs + self.outputs
+        x, y = self.inputs, self.outputs
         bn, n = x.shape
         grad = np.zeros(shape=(bn, n, n), dtype=x.dtype)
 
@@ -93,7 +93,10 @@ class Softmax(Activation):
         #then fill everything else with -SS which is similar to the outer product of matrix
         for i in range(bn):
             soft_out = y[i]
-            np.fill_diagonal(grad[i], soft_out*(1- soft_out))
-            grad[i] = grad[i] - np.outer(soft_out,soft_out)
+            np.filldiagonal(grad[i], soft_out * (1- soft_out))
+            for j in range(n):
+                for k in range(n):
+                    if j != k:
+                        grad[i,j,k] = -soft_out[j] * soft_out[k]
 
-        return Tensor(np.array([grad]))
+        return np.array([grad])
