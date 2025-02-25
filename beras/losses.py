@@ -40,5 +40,5 @@ class CategoricalCrossEntropy(Loss):
         """Categorical cross entropy input gradient method!"""
         y_pred = self.inputs[0]
         y_true = self.inputs[1]
-        
-        return [y_pred - y_true, np.zeros(y_true.shape)]
+        y_clip = np.clip(y_pred, 1e-10,1.0 - 1e-10)
+        return [-y_true/y_clip , np.zeros(y_true.shape)]
