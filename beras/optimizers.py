@@ -45,12 +45,11 @@ class Adam:
     def apply_gradients(self, trainable_params, grads):
         for i in range(len(trainable_params)):
             self.t += 1
-            print(self.t)
             param = trainable_params[i]
             grad = grads[i]
             
-            self.m[i] = (self.beta_1*self.m[i]) + ((1-self.beta_1)*grad)
-            self.v[i] = (self.beta_2*self.v[i]) + ((1-self.beta_2)* np.square(grad))
+            self.m[i] = (self.m[i] * self.beta_1) + ((1-self.beta_1)*grad)
+            self.v[i] = (self.v[i] * self.beta_2) + ((1-self.beta_2)* np.square(grad))
             
             m_hat = self.m[i]/(1 - np.power(self.beta_1, self.t))
             v_hat = self.v[i]/(1 - np.power(self.beta_2, self.t))
