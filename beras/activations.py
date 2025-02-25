@@ -92,8 +92,9 @@ class Softmax(Activation):
         #then fill everything else with -SS which is similar to the outer product of matrix
         for i in range(bn):
             soft_out = y[i]
-            print(soft_out)
             np.fill_diagonal(grad[i], soft_out*(1- soft_out))
             grad[i] = grad[i] - np.outer(soft_out,soft_out)
-        
+
+        print(grad)
+        print(grad.shape)
         return Tensor(np.array([grad]))
