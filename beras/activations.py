@@ -92,7 +92,7 @@ class Softmax(Activation):
         #then fill everything else with -SS which is similar to the outer product of matrix
         for i in range(bn):
             soft_out = y[i]
-            np.filldiagonal(grad[i], soft_out * (1- soft_out))
+            np.fill_diagonal(grad[i], soft_out * (1- soft_out))
             for j in range(n):
                 for k in range(n):
                     if j != k:
