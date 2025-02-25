@@ -43,8 +43,8 @@ class Adam:
         self.t = 0                              # Time counter
 
     def apply_gradients(self, trainable_params, grads):
+        self.t += 1
         for i in range(len(trainable_params)):
-            self.t += 1
             param = trainable_params[i]
             grad = grads[i]
             
