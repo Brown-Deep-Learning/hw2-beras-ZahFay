@@ -59,8 +59,8 @@ class Model(Diffable):
         """
         layer_weights = []
         for layer in self.layers:
-            pass
-        return NotImplementedError
+            layer_weights.append(layer.weights)
+        return layer_weights
 
     def compile(self, optimizer: Diffable, loss_fn: Diffable, acc_fn: Callable):
         """
