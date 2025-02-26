@@ -45,22 +45,22 @@ class GradientTape:
             counter+= 1
             current_tensor = queue.pop()
             current_id = id(current_tensor)
-            layer = self.previous_layers[current_id] #gives the list of layers previous to the current layer, since it's linear we expect it to be a single one
-            if layer != None:
-                input = layer.inputs
-                weight = layer.weights
+            # layer = self.previous_layers[current_id] #gives the list of layers previous to the current layer, since it's linear we expect it to be a single one
+            # if layer != None:
+            #     input = layer.inputs
+            #     weight = layer.weights
 
-                if grads[current_id] != None:
-                    print(grads[current_id])
-                    input_grad = layer.compose_input_gradients(grads[current_id])
-                    weight_grad = layer.compose_weight_gradients(grads[current_id])
-                else:
-                    input_grad = layer.get_input_gradients()
-                    weight_grad = layer.get_weight_gradients()
+            #     if grads[current_id] != None:
+            #         print(grads[current_id])
+            #         input_grad = layer.compose_input_gradients(grads[current_id])
+            #         weight_grad = layer.compose_weight_gradients(grads[current_id])
+            #     else:
+            #         input_grad = layer.get_input_gradients()
+            #         weight_grad = layer.get_weight_gradients()
 
-                grads[id(input)] = input_grad
-                grads[id(weight)] = weight_grad
-                queue.append(input)
+            #     grads[id(input)] = input_grad
+            #     grads[id(weight)] = weight_grad
+            #     queue.append(input)
 
         return grads
 
