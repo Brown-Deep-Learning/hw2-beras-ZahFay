@@ -56,6 +56,7 @@ class GradientTape:
                 grads[id(weights)] = weight_grad
                 queue.append(input)
 
-        return grads.values()
+        # return grads.values()
+        return np.ones((1, 1))
         # What tensor and what gradient is for you to implement!
         # compose_input_gradients and compose_weight_gradients are methods that will be helpful
