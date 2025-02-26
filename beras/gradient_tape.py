@@ -40,39 +40,22 @@ class GradientTape:
         # in the end, your grads dictionary should have the following structure:
         # {id(tensor): [gradient]} 
         counter = 0
-        # grads[id(target)] = [np.ones_like(target)]
         while len(queue) != 0:
             counter+= 1
             current_tensor = queue.pop()
             current_id = id(current_tensor)
             layer = self.previous_layers[current_id] #gives the list of layers previous to the current layer, since it's linear we expect it to be a single one
             if layer != None:
-
                 inputs = layer.inputs
                 weights = layer.weights
-            #     input_grad, weight_grad = None
-            #     if grads[current_id] != None:
-            #         # pass
-            # #         print(grads[current_id])
-            #         input_grad = layer.compose_input_gradients(grads[current_id])
-            #         weight_grad = layer.compose_weight_gradients(grads[current_id])
-            #     else:
-            #         input_grad = layer.get_input_gradients()
-            #         weight_grad = layer.get_weight_gradients()
-                # for inp in input:
-                    # input_grad = layer.compose_input_gradients(inp)
-                for input in inputs:
-                    
-                    grads[id(input)] = layer.compose_input_gradients(grads[current_id])
-                for weight in weights:
-                    grads[id(weight)] = layer.compose_weight_gradients(grads[current_id])
-                # grads[id(weight)] = layer.compose_weight_gradients(grads[current_id])
 
-                # grads[id(input)] = input_grad
-                # grads[id(weight)] = weight_grad
+                input_grad = layer.compose_input_gradients(grads[current_id])
+                weight_grad = layer.compose_weight_gradients(grads[current_id])
+
+                grads[id(inputs)] = input_grad
+                grads[id(weights)] = weight_grad
                 queue.append(input)
 
-        return grads
-
+        return grads.values()
         # What tensor and what gradient is for you to implement!
         # compose_input_gradients and compose_weight_gradients are methods that will be helpful
