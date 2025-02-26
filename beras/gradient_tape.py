@@ -64,6 +64,8 @@ class GradientTape:
                 for input in inputs:
                     
                     grads[id(input)] = layer.compose_input_gradients(grads[current_id])
+                for weight in weights:
+                    grads[id(weight)] = layer.compose_weight_gradients(grads[current_id])
                 # grads[id(weight)] = layer.compose_weight_gradients(grads[current_id])
 
                 # grads[id(input)] = input_grad
