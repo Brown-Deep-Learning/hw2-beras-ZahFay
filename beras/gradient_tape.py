@@ -40,7 +40,7 @@ class GradientTape:
         # in the end, your grads dictionary should have the following structure:
         # {id(tensor): [gradient]} 
         counter = 0
-        grads[id(target)] = [np.ones_like(target)]
+        # grads[id(target)] = [np.ones_like(target)]
         while len(queue) != 0:
             counter+= 1
             current_tensor = queue.pop()
