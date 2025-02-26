@@ -61,10 +61,10 @@ class GradientTape:
             #         weight_grad = layer.get_weight_gradients()
                 for inp in input:
                     input_grad = layer.compose_input_gradients(inp)
-                    grads(id(inp)) = input_grad
+                    grads[id(inp)] = input_grad
                 for wei in weight:
                     weight_grad = layer.compose_weight_gradients(wei)
-                    grads(id(wei)) = weight_grad
+                    grads[id(wei)] = weight_grad
 
                 # grads[id(input)] = input_grad
                 # grads[id(weight)] = weight_grad
