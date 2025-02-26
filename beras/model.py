@@ -77,7 +77,21 @@ class Model(Diffable):
         Trains the model by iterating over the input dataset and feeding input batches
         into the batch_step method with training. At the end, the metrics are returned.
         """
-        return NotImplementedError
+        num_batches = len(x) / batch_size
+        train_metrics = defaultdict(list)
+
+        for epoch in range(epochs):
+            for batch in range(num_batches):
+                batch_start = batch * batch_size
+                batch_end = (batch + 1)  * batch_size
+
+                x_batch = x[batch_start: batch_end]
+                y_batch = y[batch_start: batch_end]
+
+                batch_training = self.batch_step(x_batch, y_batch, True)
+                update_metric_dict(train_metrics, batch_training)
+                
+            print_stats(train_metrics, epoch, True)
 
     def evaluate(self, x: Tensor, y: Union[Tensor, np.ndarray], batch_size: int):
         """
