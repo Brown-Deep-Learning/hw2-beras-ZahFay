@@ -49,10 +49,10 @@ class GradientTape:
                 inputs = layer.inputs
                 weights = layer.weights
 
-                input_grad = layer.compose_input_gradients(grads[current_id][0])
-                weight_grad = layer.compose_weight_gradients(grads[current_id][1])
+                input_grad = layer.compose_input_gradients(grads[id(layer)][0])
+                weight_grad = layer.compose_weight_gradients(grads[id(layer)][1])
 
-                grads[id(layer)] = [input_grad, weight_grad]
+                grads[current_id] = [input_grad, weight_grad]
                 # grads[id(weights)] = weight_grad
                 queue.append(input)
 
