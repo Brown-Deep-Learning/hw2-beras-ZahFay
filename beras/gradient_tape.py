@@ -47,8 +47,8 @@ class GradientTape:
                 input = layer.inputs
                 weight = layer.weights
 
+                print(grads[current_id])
                 if grads[current_id] != None:
-                    print(grads[current_id])
                     input_grad = layer.compose_input_gradients(grads[current_id])
                     weight_grad = layer.compose_weight_gradients(grads[current_id])
                 else:
