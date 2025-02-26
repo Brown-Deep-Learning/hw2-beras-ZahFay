@@ -36,7 +36,7 @@ class GradientTape:
         grads = defaultdict(lambda: None)   ## Grads to be recorded. Initialize to None. Note: stores {id: list[gradients]}
         # Use id(tensor) to get the object id of a tensor object.
         # in the end, your grads dictionary should have the following structure:
-        # {id(tensor): [gradient]}
+        # {id(tensor): [gradient]} 
         counter = 0
         while len(queue) != 0:
             counter+= 1
@@ -46,12 +46,14 @@ class GradientTape:
             if layer != None:
                 input = layer.inputs
                 weight = layer.weights
-                input_grad = layer.compose_input_gradients(grads[current_id])
-                weight_grad = layer.compose_weight_gradients(grads[current_id])
-                print(input)
-                print(weight)
-                print(grads[current_id])
-                print(grads[current_id])
+
+                if grads[current_id] != None:
+                    input_grad = layer.compose_input_gradients(grads[current_id])
+                    weight_grad = layer.compose_weight_gradients(grads[current_id])
+                else:
+                    input_grad = layer.get_input_gradients()
+                    weight_grad = layer.get_weight_gradients()
+                    
                 grads[id(input)] = input_grad
                 grads[id(weight)] = weight_grad
                 queue.append(input)
