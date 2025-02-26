@@ -37,10 +37,12 @@ class GradientTape:
         # Use id(tensor) to get the object id of a tensor object.
         # in the end, your grads dictionary should have the following structure:
         # {id(tensor): [gradient]}
+        counter = 0
         while len(queue) != 0:
+            counter+= 1
+            print(counter)
             current_tensor = queue.pop()
             current_id = id(current_tensor)
-            print(current_id)
             layer = self.previous_layers[current_id] #gives the list of layers previous to the current layer, since it's linear we expect it to be a single one
             input = layer.inputs
             weight = layer.weights
