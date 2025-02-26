@@ -50,7 +50,6 @@ class GradientTape:
                 input = layer.inputs
                 weight = layer.weights
 
-                print(grads[current_id])
                 if grads[current_id] != None:
                     input_grad = layer.compose_input_gradients(grads[current_id])
                     weight_grad = layer.compose_weight_gradients(grads[current_id])
@@ -62,7 +61,7 @@ class GradientTape:
                 grads[id(weight)] = weight_grad
                 queue.append(input)
 
-        return [grads[id(source)] for source in sources]
+        return grads
 
         # What tensor and what gradient is for you to implement!
         # compose_input_gradients and compose_weight_gradients are methods that will be helpful
