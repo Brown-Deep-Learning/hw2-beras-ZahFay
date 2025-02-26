@@ -90,7 +90,7 @@ class Model(Diffable):
 
                 batch_training = self.batch_step(x_batch, y_batch, True)
                 update_metric_dict(train_metrics, batch_training)
-                
+
             print_stats(train_metrics, epoch, True)
 
     def evaluate(self, x: Tensor, y: Union[Tensor, np.ndarray], batch_size: int):
@@ -125,7 +125,10 @@ class SequentialModel(Model):
         """Forward pass in sequential model. It's helpful to note that layers are initialized in beras.Model, and
         you can refer to them with self.layers. You can call a layer by doing var = layer(input).
         """
-        return NotImplementedError
+        output = inputs
+        for layer in self.layers:
+            output = layer(output)
+        return output
 
     def batch_step(self, x:Tensor, y: Tensor, training: bool =True) -> dict[str, float]:
         """Computes loss and accuracy for a batch. This step consists of both a forward and backward pass.
