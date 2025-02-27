@@ -18,7 +18,7 @@ def get_model():
            # e.g. Dense(10, 10),
            Dense(784,256, "kaiming"),
            LeakyReLU(),
-           Dense(256,128,"kaiming"),
+           Dense(256,10,"kaiming"),
            Softmax()
         ]
     )
