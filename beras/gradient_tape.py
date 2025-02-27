@@ -59,6 +59,6 @@ class GradientTape:
         output = []
         for source in sources:
             output.append(grads[id(source)])
-        return np.array(output)
+        return output
         # What tensor and what gradient is for you to implement!
         # compose_input_gradients and compose_weight_gradients are methods that will be helpful
