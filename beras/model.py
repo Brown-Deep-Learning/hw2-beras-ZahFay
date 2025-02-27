@@ -136,8 +136,18 @@ class SequentialModel(Model):
         will take place within the scope of Beras.GradientTape()"""
         ## TODO: Compute loss and accuracy for a batch. Return as a dictionary
         ## If training, then also update the gradients according to the optimizer
+
+        with GradientTape as tape:
+            #calculate the losses here
+            forward_pass = self.forward(x)
+            #technically the compiled_loss is just the loss function selected (cross entropy or MSE)
+            #reverse?
+            loss_value = self.compiled_loss(y, forward_pass)
     
         if training:
-            return {"loss": ???, "acc": ???}
+            #use an optimizer
+            grads = tape.gradient(loss_value, self.trainable_variables)
+            self.optimizer.apply_gradients(zip(grads, self.trainable_variables))
+            return {"loss": self.compiled_loss, "acc": self.compiled_acc}
         else:
-            return {"loss": ???, "acc": ???}, predictions
+            return {"loss": self.compiled_loss, "acc": self.compiled_acc}, predictions
