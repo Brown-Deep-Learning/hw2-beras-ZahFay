@@ -77,7 +77,7 @@ class Model(Diffable):
         Trains the model by iterating over the input dataset and feeding input batches
         into the batch_step method with training. At the end, the metrics are returned.
         """
-        num_batches = len(x) / batch_size
+        num_batches = int(len(x) / batch_size)
         train_metrics = defaultdict(list)
 
         for epoch in range(epochs):
@@ -103,7 +103,20 @@ class Model(Diffable):
         NOTE: This method is almost identical to fit (think about how training and testing differ --
         the core logic should be the same)
         """
-        return NotImplementedError
+        num_batches = int(len(x) / batch_size)
+        train_metrics = defaultdict(list)
+
+        for batch in range(num_batches):
+            batch_start = batch * batch_size
+            batch_end = (batch + 1)  * batch_size
+
+            x_batch = x[batch_start: batch_end]
+            y_batch = y[batch_start: batch_end]
+
+            batch_training = self.batch_step(x_batch, y_batch, False)
+            update_metric_dict(train_metrics, batch_training)
+
+        print_stats(train_metrics, True)
 
     def get_input_gradients(self) -> list[Tensor]:
         return super().get_input_gradients()
@@ -137,17 +150,17 @@ class SequentialModel(Model):
         ## TODO: Compute loss and accuracy for a batch. Return as a dictionary
         ## If training, then also update the gradients according to the optimizer
 
-        with GradientTape as tape:
+        with GradientTape() as tape:
             #calculate the losses here
             forward_pass = self.forward(x)
             #technically the compiled_loss is just the loss function selected (cross entropy or MSE)
-            #reverse?
+            #could be reversed?
             loss_value = self.compiled_loss(y, forward_pass)
     
         if training:
             #use an optimizer
             grads = tape.gradient(loss_value, self.trainable_variables)
-            self.optimizer.apply_gradients(zip(self.trainable_variables, grads))
+            self.optimizer.apply_gradients(self.trainable_variables, grads)
             return {"loss": self.compiled_loss, "acc": self.compiled_acc}
         else:
-            return {"loss": self.compiled_loss, "acc": self.compiled_acc}, predictions
+            return {"loss": self.compiled_loss, "acc": self.compiled_acc}, forward_pass

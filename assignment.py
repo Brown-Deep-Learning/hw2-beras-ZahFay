@@ -10,26 +10,34 @@ import numpy as np
 
 from beras.model import SequentialModel
 
+#do batch_size 512, epochs = 10
 def get_model():
     model = SequentialModel(
         [
            # Add in your layers here as elements of the list!
            # e.g. Dense(10, 10),
+           Dense(784,256),
+           LeakyReLU(),
+           Dense(256,128),
+           Softmax()
         ]
     )
     return model
 
 def get_optimizer():
     # choose an optimizer, initialize it and return it!
-    return ...
+    adam_opt = Adam(learning_rate=0.012)
+    return adam_opt
 
 def get_loss_fn():
     # choose a loss function, initialize it and return it!
-    return ...
+    cross = CategoricalCrossEntropy()
+    return cross
 
 def get_acc_fn():
     # choose an accuracy metric, initialize it and return it!
-    return ...
+    acc = CategoricalAccuracy()
+    return acc
 
 if __name__ == '__main__':
 
@@ -44,5 +52,8 @@ if __name__ == '__main__':
     # 4. Train the model
 
     # 5. Evaluate the model
-    
-    
+    my_model = get_model()
+    my_model.compile(Adam(learning_rate= 0.012), CategoricalCrossEntropy(), CategoricalAccuracy())
+    data = load_and_preprocess_data()
+    my_model.fit(data[0], data[1], 10, 512)
+    my_model.fit(data[2], data[3], 512)
