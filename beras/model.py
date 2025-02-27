@@ -59,7 +59,7 @@ class Model(Diffable):
         """
         layer_weights = []
         for layer in self.layers:
-            layer_weights.append(layer.weights[0])
+            layer_weights.extend(layer.weights)
         return layer_weights
 
     def compile(self, optimizer: Diffable, loss_fn: Diffable, acc_fn: Callable):
