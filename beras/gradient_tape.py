@@ -47,18 +47,14 @@ class GradientTape:
             layer = self.previous_layers[current_id] #gives the list of layers previous to the current layer, since it's linear we expect it to be a single one
             if layer != None:
                 inputs = layer.inputs
-
-                for inpt in (inputs):
-                    input_grad = layer.compose_input_gradients(grads[current_id])
-                    grads[id(inpt)] = input_grad
-                    queue.append(inpt)
+                input_grad = layer.compose_input_gradients(grads[current_id])
+                grads[id(inputs)] = input_grad
+                queue.append(inputs)
 
                 weights = layer.weights
-
-                for weigh in (weights):
-                    weight_grad = layer.compose_weight_gradients(grads[current_id])
-                    grads[id(weigh)] = weight_grad
-                    queue.append(weigh)
+                weight_grad = layer.compose_weight_gradients(grads[current_id])
+                grads[id(weights)] = weight_grad
+                queue.append(weights)
 
         output = []
         for source in sources:
