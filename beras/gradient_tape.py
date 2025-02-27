@@ -48,12 +48,16 @@ class GradientTape:
             if layer != None:
                 inputs = layer.inputs
                 input_grad = layer.compose_input_gradients(grads[current_id])
+                print("length of inputs, " ,len(inputs))
+                print("length of inputs grad, " ,len(input_grad))
                 for inp, grad in zip(inputs,input_grad):
                     grads[id(inp)] = grad
                     queue.append(inp)
 
                 weights = layer.weights
                 weight_grad = layer.compose_weight_gradients(grads[current_id])
+                print("length of weight, " ,len(weights))
+                print("length of weight grad, " ,len(weight_grad))
                 for wei, grad in zip(weights,weight_grad):
                     grads[id(wei)] = grad
                     queue.append(wei)
