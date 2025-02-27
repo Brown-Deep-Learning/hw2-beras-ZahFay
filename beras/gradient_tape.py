@@ -42,7 +42,7 @@ class GradientTape:
         counter = 0
         while len(queue) != 0:
             counter+= 1
-            current_tensor = queue.pop()
+            current_tensor = queue.pop(0)
             current_id = id(current_tensor)
             layer = self.previous_layers[current_id] #gives the list of layers previous to the current layer, since it's linear we expect it to be a single one
             if layer != None:
