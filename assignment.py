@@ -54,6 +54,10 @@ if __name__ == '__main__':
     # 5. Evaluate the model
     my_model = get_model()
     my_model.compile(get_optimizer, get_loss_fn, get_acc_fn)
-    data = load_and_preprocess_data()
-    my_model.fit(data[0], data[1], 10, 32)
-    my_model.fit(data[2], data[3], 32)
+    train_inp, train_label,test_inp, test_label = load_and_preprocess_data()
+    coder = OneHotEncoder()
+    coder.fit(train_label)
+    encoded_train = coder(train_label)
+    encoded_test = coder(test_label)
+    my_model.fit(train_inp, encoded_train, 10, 32)
+    my_model.evaluate(test_inp, encoded_test, 32)
