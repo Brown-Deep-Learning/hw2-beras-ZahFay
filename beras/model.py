@@ -58,6 +58,7 @@ class Model(Diffable):
         Return the weights of the model by iterating through the layers
         """
         layer_weights = []
+        print(self.layers)
         for layer in self.layers:
             layer_weights.append(layer.weights)
         return layer_weights
