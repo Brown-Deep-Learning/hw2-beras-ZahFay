@@ -156,11 +156,13 @@ class SequentialModel(Model):
             #technically the compiled_loss is just the loss function selected (cross entropy or MSE)
             #could be reversed?
             loss_value = self.compiled_loss(forward_pass, y)
+            acc = self.compiled_acc(forward_pass,y)
     
-        if training:
+            if training:
             #use an optimizer
-            grads = tape.gradient(loss_value, self.trainable_variables)
-            self.optimizer.apply_gradients(self.trainable_variables, grads)
-            return {"loss": self.compiled_loss, "acc": self.compiled_acc}
-        else:
-            return {"loss": self.compiled_loss, "acc": self.compiled_acc}, forward_pass
+                grads = tape.gradient(loss_value, self.trainable_variables)
+                self.optimizer.apply_gradients(self.trainable_variables, grads)
+
+                return {"loss": loss_value, "acc": acc}
+            else:
+                return {"loss": loss_value, "acc": acc}, forward_pass
