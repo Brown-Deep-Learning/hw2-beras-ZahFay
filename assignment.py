@@ -16,9 +16,9 @@ def get_model():
         [
            # Add in your layers here as elements of the list!
            # e.g. Dense(10, 10),
-           Dense(784,256),
+           Dense(784,256, "kaiming"),
            LeakyReLU(),
-           Dense(256,128),
+           Dense(256,128,"kaiming"),
            Softmax()
         ]
     )
@@ -26,7 +26,7 @@ def get_model():
 
 def get_optimizer():
     # choose an optimizer, initialize it and return it!
-    adam_opt = Adam(learning_rate=0.012)
+    adam_opt = Adam(learning_rate=0.005)
     return adam_opt
 
 def get_loss_fn():
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     # 5. Evaluate the model
     my_model = get_model()
-    my_model.compile(Adam(learning_rate= 0.012), CategoricalCrossEntropy(), CategoricalAccuracy())
+    my_model.compile(get_optimizer, get_loss_fn, get_acc_fn)
     data = load_and_preprocess_data()
-    my_model.fit(data[0], data[1], 10, 512)
-    my_model.fit(data[2], data[3], 512)
+    my_model.fit(data[0], data[1], 10, 32)
+    my_model.fit(data[2], data[3], 32)
