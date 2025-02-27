@@ -59,8 +59,7 @@ class Model(Diffable):
         """
         layer_weights = []
         for layer in self.layers:
-            print(layer.weights)
-            layer_weights.append(layer.weights)
+            layer_weights.append(layer.weights[0])
         return layer_weights
 
     def compile(self, optimizer: Diffable, loss_fn: Diffable, acc_fn: Callable):
@@ -156,7 +155,7 @@ class SequentialModel(Model):
             forward_pass = self.forward(x)
             #technically the compiled_loss is just the loss function selected (cross entropy or MSE)
             #could be reversed?
-            loss_value = self.compiled_loss(y, forward_pass)
+            loss_value = self.compiled_loss(forward_pass, y)
     
         if training:
             #use an optimizer
